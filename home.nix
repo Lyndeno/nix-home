@@ -27,6 +27,7 @@
     enable = true;
     package = null;
     config = {
+      modifier = "Mod4";
       input = {
         "type:touchpad" = {
           tap = "enabled";
