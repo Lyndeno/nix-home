@@ -42,9 +42,30 @@
   programs.vscode = {
     enable = true;
     package = pkgs.vscode;
-    extensions = with pkgs.vscode-extensions; [
+    extensions = (with pkgs.vscode-extensions; [
       vscodevim.vim
       ms-vscode.cpptools
+      coenraads.bracket-pair-colorizer-2
+      usernamehw.errorlens
+      yzhang.markdown-all-in-one
+      pkief.material-icon-theme
+      ibm.output-colorizer
+      #christian-kohler.path-intellisense
+      mechatroner.rainbow-csv
+      #rust-lang.rust
+      #wayou.vscode-todo-highlight
+    ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
+      name = "rust";
+      publisher = "rust-lang";
+      version = "0.7.8";
+      sha256 = "637dda81234c5666950907587799b3c2388ae494d94edcd39264864d0ad2360d";
+    }
+    {
+      name = "nix-env-selector";
+      publisher = "arrterian";
+      version = "1.0.7";
+      sha256 = "0e76885c9dbb6dca4eac8a75866ec372b948cc64a3a3845327d7c3ef6ba42a57";
+    }
     ];
   };
 
