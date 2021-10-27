@@ -37,6 +37,19 @@
     };
   };
 
+  programs.mako = {
+    enable = true;
+    anchor = "bottom-right";
+    backgroundColor = "#191919F3";
+    borderColor = "#aa1111ff";
+    borderRadius = 5;
+    borderSize = 2;
+    defaultTimeout = 10000;
+    font = "CaskcaydiaCove Nerd Font 12";
+    groupBy = "summary";
+    layer = "overlay";
+  };
+
   programs.firefox = {
     enable = true;
     package = pkgs.firefox-wayland;
