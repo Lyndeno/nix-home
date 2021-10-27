@@ -10,7 +10,11 @@
   home.homeDirectory = "/home/lsanche";
 
   home.packages = with pkgs; [
+    # Fonts
+    (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
   ];
+
+  fonts.fontconfig.enable = true;
 
   programs.vim = {
     enable = true;
