@@ -23,6 +23,20 @@
     };
   };
 
+  wayland.windowManager.sway = {
+    enable = true;
+    package = null;
+    config = {
+      input = {
+        "type:touchpad" = {
+          tap = "enabled";
+          natural_scroll = "enabled";
+          scroll_factor = "0.2";
+        };
+      };
+    };
+  };
+
   programs.firefox = {
     enable = true;
     package = pkgs.firefox-wayland;
