@@ -25,15 +25,31 @@
   };
 
   programs.git = {
-	enable = true;
-	userName = "Lyndon Sanche";
-	userEmail = "lsanche@lyndeno.ca";
+    enable = true;
+    userName = "Lyndon Sanche";
+    userEmail = "lsanche@lyndeno.ca";
+    signing.key = "6F8E82F60C799B18";
+    signing.signByDefault = true;
+  };
+
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
+    pinentryFlavor = "gtk2";
   };
 
   nixpkgs.config.allowUnfree = true;
   programs.vscode = {
     enable = true;
     package = pkgs.vscode;
+    extensions = with pkgs.vscode-extensions; [
+      vscodevim.vim
+      ms-vscode.cpptools
+    ];
+  };
+
+  programs.starship = {
+    enable = true;
   };
 
   # This value determines the Home Manager release that your
