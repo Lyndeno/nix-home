@@ -146,6 +146,23 @@
       sha256 = "0e76885c9dbb6dca4eac8a75866ec372b948cc64a3a3845327d7c3ef6ba42a57";
     }
     ];
+    userSettings = {
+      "editor.cursorSmoothCaretAnimation" = true;
+      "editor.smoothScrolling" = true;
+      "editor.cursorBlinking" = "phase";
+      "git.autofetch" = true;
+      "git.confirmSync" = false;
+      "git.enableSmartCommit" = true;
+      "workbench.iconTheme" = "material-icon-theme";
+      "editor.fontLigatures" = true;
+      "editor.fontFamily" = "'CaskaydiaCove Nerd Font'";
+      "terminal.integrated.fontFamily" = "'CaskaydiaCove Nerd Font'";
+      "window.menuBarVisibility" = "toggle";
+      "workbench.editor.decorations.badges" = true;
+      "workbench.editor.decorations.colors" = true;
+      "workbench.editor.wrapTabs" = true;
+      "diffEditor.renderSideBySide" = true;
+    };
   };
 
   programs.starship = {
