@@ -12,6 +12,16 @@
   home.packages = with pkgs; [
     # Fonts
     (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+    neofetch
+    starship
+    exa
+    bat
+    jq
+    bottom
+    spotify
+    zathura
+    pavucontrol
+    signal-desktop
   ];
 
   fonts.fontconfig.enable = true;
@@ -23,10 +33,51 @@
     };
   };
 
+  programs.zsh = {
+    enable = true;
+    enableAutosuggestions = true;
+    enableCompletion = true;
+    #enableSyntaxHighlighting = true; # seems this is a new addition
+  };
+
+  programs.waybar = {
+    enable = true;
+    settings = [{
+      position = "bottom";
+      height = 18;
+      modules-left = ["sway/workspaces" "sway/window"];
+      modules-right = ["clock"];
+      gtk-layer-shell = true;
+      margin = "20 20";
+    }];
+  };
+
   wayland.windowManager.sway = {
     enable = true;
+    wrapperFeatures.gtk = true;
     package = null;
     config = {
+      startup = [
+        { command = "pkill waybar; waybar"; always = true;}
+      ];
+      window.titlebar = false;
+      window.commands = [
+        {
+          criteria = {
+            title = "^Picture-in-Picture$";
+            app_id = "firefox";
+          };
+          command = "floating enable, move position 877 450, sticky enable";
+        }
+        {
+          criteria = {
+            title = "Firefox — Sharing Indicator";
+            app_id = "firefox";
+          };
+          command = "floating enable, move position 877 450";
+        }
+      ];
+      terminal = "alacritty";
       modifier = "Mod4";
       input = {
         "type:touchpad" = {
@@ -35,6 +86,7 @@
           scroll_factor = "0.2";
         };
       };
+      bars = [];
     };
   };
 
@@ -57,7 +109,7 @@
       font = {
         size = 12;
         normal = {
-          family = "CaskaydiaCove Nerd Font";
+          family = "CaskaydiaCove Nerd Font Mono";
           style = "Regular";
         };
       };
@@ -134,6 +186,7 @@
       mechatroner.rainbow-csv
       #rust-lang.rust
       #wayou.vscode-todo-highlight
+      jnoortheen.nix-ide
     ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
       name = "rust";
       publisher = "rust-lang";
