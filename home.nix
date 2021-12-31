@@ -1,30 +1,37 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  #programs.home-manager.enable = true;
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = "lsanche";
-  home.homeDirectory = "/home/lsanche";
+  #home.username = "lsanche";
+  #home.homeDirectory = "/home/lsanche";
 
   home.packages = with pkgs; [
     # Fonts
     (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
-    neofetch
+    #neofetch
     starship
     exa
     bat
     jq
-    bottom
+    #bottom
     spotify
     zathura
-    pavucontrol
+    #pavucontrol
     signal-desktop
+    #gnupg
+    #gnome.seahorse
+    #gnome.nautilus
   ];
 
-  fonts.fontconfig.enable = true;
+  home.sessionVariables = {
+    EDITOR = "vim";
+  };
+
+  #fonts.fontconfig.enable = true;
 
   programs.vim = {
     enable = true;
@@ -33,33 +40,72 @@
     };
   };
 
-  programs.zsh = {
-    enable = true;
-    enableAutosuggestions = true;
-    enableCompletion = true;
-    #enableSyntaxHighlighting = true; # seems this is a new addition
-  };
+  #programs.zsh = {
+  #  enable = true;
+  #  enableAutosuggestions = true;
+  #  enableCompletion = true;
+  #  #enableSyntaxHighlighting = true; # seems this is a new addition
+  #};
 
   programs.waybar = {
     enable = true;
+    # in next release will allow specifying the path to a css file
+    # this is a disgusting hack for now
+    style = ''@import "/etc/nixos/users/lsanche/home-manager/style.css";'';
     settings = [{
       position = "bottom";
-      height = 18;
+      height = 10;
       modules-left = ["sway/workspaces" "sway/window"];
-      modules-right = ["clock"];
+      modules-right = ["disk#nix" "cpu" "memory" "network" "battery" "backlight" "clock" "pulseaudio" "idle_inhibitor" "tray" ];
       gtk-layer-shell = true;
-      margin = "20 20";
+      modules = {
+        "disk#nix" = {
+          interval = 30;
+          format = " {percentage_free}%";
+          path = "/nix";
+          states = {
+            "warning" = 80;
+            "high" =  90;
+            "critical" = 95;
+          };
+
+          "battery" = {
+            interval = 5;
+            states = {
+              "warning" = 30;
+              "critical" = 15;
+            };
+            format-discharging = "{icon} {capacity}%";
+            format-charging = " {capacity}%";
+            format-full = " Full";
+            format-icons = ["" "" "" "" "" "" "" "" "" ""];
+          };
+        };
+      };
     }];
   };
 
   wayland.windowManager.sway = {
     enable = true;
-    wrapperFeatures.gtk = true;
+    systemdIntegration = false;
+    wrapperFeatures.gtk = false;
+    wrapperFeatures.base = false;
     package = null;
     config = {
       startup = [
-        { command = "pkill waybar; waybar"; always = true;}
+        { command = "pkill waybar; ${pkgs.waybar}/bin/waybar"; always = true;}
       ];
+      keybindings = let
+        modifier = config.wayland.windowManager.sway.config.modifier;
+        menu = config.wayland.windowManager.sway.config.menu;
+      in lib.mkOptionDefault {
+        "${modifier}+l" = "exec ${pkgs.swaylock}/bin/swaylock";
+        "${modifier}+grave" = "exec ${menu}";
+        # TODO: Figure out how to make this conditional on host
+        "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +2%";
+        "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 2%-";
+      };
+      menu = "${pkgs.wofi}/bin/wofi --show drun --allow-images --no-actions";
       window.titlebar = false;
       window.commands = [
         {
@@ -107,7 +153,7 @@
     enable = true;
     settings = {
       font = {
-        size = 12;
+        size = 11;
         normal = {
           family = "CaskaydiaCove Nerd Font Mono";
           style = "Regular";
@@ -151,10 +197,10 @@
     };
   };
 
-  programs.firefox = {
-    enable = true;
-    package = pkgs.firefox-wayland;
-  };
+  #programs.firefox = {
+  #  enable = true;
+  #  package = pkgs.firefox-wayland;
+  #};
 
   programs.git = {
     enable = true;
@@ -164,60 +210,64 @@
     signing.signByDefault = true;
   };
 
-  services.gpg-agent = {
-    enable = true;
-    enableSshSupport = true;
-    pinentryFlavor = "gtk2";
-  };
+  #services.gpg-agent = {
+  #  enable = true;
+  #  #enableSshSupport = true;
+  #  pinentryFlavor = "gnome3";
+  #};
+  #services.gnome-keyring = {
+  #  enable = true;
+  #  components = [ "secrets" "ssh" ];
+  #};
 
   nixpkgs.config.allowUnfree = true;
-  programs.vscode = {
-    enable = true;
-    package = pkgs.vscode;
-    extensions = (with pkgs.vscode-extensions; [
-      vscodevim.vim
-      ms-vscode.cpptools
-      coenraads.bracket-pair-colorizer-2
-      usernamehw.errorlens
-      yzhang.markdown-all-in-one
-      pkief.material-icon-theme
-      ibm.output-colorizer
-      #christian-kohler.path-intellisense
-      mechatroner.rainbow-csv
-      #rust-lang.rust
-      #wayou.vscode-todo-highlight
-      jnoortheen.nix-ide
-    ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
-      name = "rust";
-      publisher = "rust-lang";
-      version = "0.7.8";
-      sha256 = "637dda81234c5666950907587799b3c2388ae494d94edcd39264864d0ad2360d";
-    }
-    {
-      name = "nix-env-selector";
-      publisher = "arrterian";
-      version = "1.0.7";
-      sha256 = "0e76885c9dbb6dca4eac8a75866ec372b948cc64a3a3845327d7c3ef6ba42a57";
-    }
-    ];
-    userSettings = {
-      "editor.cursorSmoothCaretAnimation" = true;
-      "editor.smoothScrolling" = true;
-      "editor.cursorBlinking" = "phase";
-      "git.autofetch" = true;
-      "git.confirmSync" = false;
-      "git.enableSmartCommit" = true;
-      "workbench.iconTheme" = "material-icon-theme";
-      "editor.fontLigatures" = true;
-      "editor.fontFamily" = "'CaskaydiaCove Nerd Font'";
-      "terminal.integrated.fontFamily" = "'CaskaydiaCove Nerd Font'";
-      "window.menuBarVisibility" = "toggle";
-      "workbench.editor.decorations.badges" = true;
-      "workbench.editor.decorations.colors" = true;
-      "workbench.editor.wrapTabs" = true;
-      "diffEditor.renderSideBySide" = true;
-    };
-  };
+  #programs.vscode = {
+  #  enable = true;
+  #  package = pkgs.vscode;
+  #  extensions = (with pkgs.vscode-extensions; [
+  #    vscodevim.vim
+  #    ms-vscode.cpptools
+  #    coenraads.bracket-pair-colorizer-2
+  #    usernamehw.errorlens
+  #    yzhang.markdown-all-in-one
+  #    pkief.material-icon-theme
+  #    ibm.output-colorizer
+  #    #christian-kohler.path-intellisense
+  #    mechatroner.rainbow-csv
+  #    #rust-lang.rust
+  #    #wayou.vscode-todo-highlight
+  #    jnoortheen.nix-ide
+  #  ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
+  #    name = "rust";
+  #    publisher = "rust-lang";
+  #    version = "0.7.8";
+  #    sha256 = "637dda81234c5666950907587799b3c2388ae494d94edcd39264864d0ad2360d";
+  #  }
+  #  {
+  #    name = "nix-env-selector";
+  #    publisher = "arrterian";
+  #    version = "1.0.7";
+  #    sha256 = "0e76885c9dbb6dca4eac8a75866ec372b948cc64a3a3845327d7c3ef6ba42a57";
+  #  }
+  #  ];
+  #  userSettings = {
+  #    "editor.cursorSmoothCaretAnimation" = true;
+  #    "editor.smoothScrolling" = true;
+  #    "editor.cursorBlinking" = "phase";
+  #    "git.autofetch" = true;
+  #    "git.confirmSync" = false;
+  #    "git.enableSmartCommit" = true;
+  #    "workbench.iconTheme" = "material-icon-theme";
+  #    "editor.fontLigatures" = true;
+  #    "editor.fontFamily" = "'CaskaydiaCove Nerd Font'";
+  #    "terminal.integrated.fontFamily" = "'CaskaydiaCove Nerd Font'";
+  #    "window.menuBarVisibility" = "toggle";
+  #    "workbench.editor.decorations.badges" = true;
+  #    "workbench.editor.decorations.colors" = true;
+  #    "workbench.editor.wrapTabs" = true;
+  #    "diffEditor.renderSideBySide" = true;
+  #  };
+  #};
 
   programs.starship = {
     enable = true;
@@ -231,5 +281,5 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "21.05";
+  #home.stateVersion = "21.11";
 }
