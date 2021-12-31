@@ -88,12 +88,12 @@
   wayland.windowManager.sway = {
     enable = true;
     systemdIntegration = false;
-    wrapperFeatures.gtk = false;
-    wrapperFeatures.base = false;
+    wrapperFeatures.gtk = true;
     package = null;
     config = {
       startup = [
-        { command = "pkill waybar; ${pkgs.waybar}/bin/waybar"; always = true;}
+        #{ command = "pkill waybar; ${pkgs.waybar}/bin/waybar"; always = true;}
+        { command = "dbus-update-activation-environment WAYLAND_DISPLAY"; }
       ];
       keybindings = let
         modifier = config.wayland.windowManager.sway.config.modifier;
@@ -132,7 +132,11 @@
           scroll_factor = "0.2";
         };
       };
-      bars = [];
+      bars = [
+        {
+          command = "${pkgs.waybar}/bin/waybar";
+        }
+      ];
     };
   };
 
