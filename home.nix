@@ -40,12 +40,15 @@
     };
   };
 
-  #programs.zsh = {
-  #  enable = true;
-  #  enableAutosuggestions = true;
-  #  enableCompletion = true;
-  #  #enableSyntaxHighlighting = true; # seems this is a new addition
-  #};
+  programs.zsh = {
+    enable = true;
+    enableAutosuggestions = true;
+    enableCompletion = true;
+    enableSyntaxHighlighting = true; # seems this is a new addition
+    history = {
+      path = "$HOME/.cache/zsh/histfile";
+    };
+  };
 
   programs.waybar = {
     enable = true;
