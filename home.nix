@@ -71,18 +71,18 @@
             "high" =  90;
             "critical" = 95;
           };
+        };
 
-          "battery" = {
-            interval = 5;
-            states = {
-              "warning" = 30;
-              "critical" = 15;
-            };
-            format-discharging = "{icon} {capacity}%";
-            format-charging = " {capacity}%";
-            format-full = " Full";
-            format-icons = ["" "" "" "" "" "" "" "" "" ""];
+        "battery" = {
+          interval = 5;
+          states = {
+            "warning" = 30;
+            "critical" = 15;
           };
+          format-discharging = "{icon} {capacity}%";
+          format-charging = " {capacity}%";
+          format-full = " Full";
+          format-icons = ["" "" "" "" "" "" "" "" "" ""];
         };
       };
     }];
