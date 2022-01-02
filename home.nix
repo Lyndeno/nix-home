@@ -21,7 +21,7 @@
     spotify
     zathura
     #pavucontrol
-    signal-desktop
+    #signal-desktop
     #gnupg
     #gnome.seahorse
     #gnome.nautilus
