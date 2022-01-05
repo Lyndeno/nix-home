@@ -100,12 +100,19 @@
       keybindings = let
         modifier = config.wayland.windowManager.sway.config.modifier;
         menu = config.wayland.windowManager.sway.config.menu;
+        setMute = "pactl set-sink-mute @DEFAULT_SINK@";
+        setVolume = "pactl -- set-sink-volume @DEFAULT_SINK@";
       in lib.mkOptionDefault {
         "${modifier}+l" = "exec ${pkgs.swaylock}/bin/swaylock";
         "${modifier}+grave" = "exec ${menu}";
         # TODO: Figure out how to make this conditional on host
         "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +2%";
         "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 2%-";
+
+        #TODO: Implement --locked
+        "XF86AudioRaiseVolume" = "exec ${setMute} off && ${setVolume} +2%";
+        "XF86AudioLowerVolume" = "exec ${setMute} off && ${setVolume} -2%";
+        "XF86AudioMute" = "exec ${setMute} toggle";
       };
       menu = "${pkgs.wofi}/bin/wofi --show drun --allow-images --no-actions";
       window.titlebar = false;
