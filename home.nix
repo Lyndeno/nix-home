@@ -87,6 +87,8 @@
     }];
   };
 
+  xdg.configFile."swaylock/config".source = ./swaylock.conf;
+
   wayland.windowManager.sway = {
     enable = true;
     systemdIntegration = false;
@@ -103,7 +105,7 @@
         setMute = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@";
         setVolume = "${pkgs.pulseaudio}/bin/pactl -- set-sink-volume @DEFAULT_SINK@";
       in lib.mkOptionDefault {
-        "${modifier}+l" = "exec ${pkgs.swaylock}/bin/swaylock";
+        "${modifier}+l" = "exec ${pkgs.swaylock-effects}/bin/swaylock";
         "${modifier}+grave" = "exec ${menu}";
         # TODO: Figure out how to make this conditional on host
         "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +2%";
