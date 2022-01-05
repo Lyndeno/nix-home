@@ -100,8 +100,8 @@
       keybindings = let
         modifier = config.wayland.windowManager.sway.config.modifier;
         menu = config.wayland.windowManager.sway.config.menu;
-        setMute = "pactl set-sink-mute @DEFAULT_SINK@";
-        setVolume = "pactl -- set-sink-volume @DEFAULT_SINK@";
+        setMute = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@";
+        setVolume = "${pkgs.pulseaudio}/bin/pactl -- set-sink-volume @DEFAULT_SINK@";
       in lib.mkOptionDefault {
         "${modifier}+l" = "exec ${pkgs.swaylock}/bin/swaylock";
         "${modifier}+grave" = "exec ${menu}";
