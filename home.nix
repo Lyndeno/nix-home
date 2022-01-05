@@ -53,8 +53,7 @@
   programs.waybar = {
     enable = true;
     # in next release will allow specifying the path to a css file
-    # this is a disgusting hack for now
-    style = ''@import "/etc/nixos/users/lsanche/home-manager/style.css";'';
+    style = lib.readFile ./style.css;
     settings = [{
       position = "bottom";
       height = 10;
