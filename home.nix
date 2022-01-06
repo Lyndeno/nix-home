@@ -39,7 +39,7 @@ in
   services.gammastep = {
     enable = true;
     latitude = 53.6;
-    longitude = 113.3;
+    longitude = -113.3;
     tray = true;
   };
 
