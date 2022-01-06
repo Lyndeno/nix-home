@@ -1,5 +1,8 @@
 { config, pkgs, lib, ... }:
 
+let
+  lockCommand = "${pkgs.swaylock-effects}/bin/swaylock";
+in
 {
   # Let Home Manager install and manage itself.
   #programs.home-manager.enable = true;
@@ -132,7 +135,7 @@
         setMute = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@";
         setVolume = "${pkgs.pulseaudio}/bin/pactl -- set-sink-volume @DEFAULT_SINK@";
       in lib.mkOptionDefault {
-        "${modifier}+l" = "exec ${pkgs.swaylock-effects}/bin/swaylock";
+        "${modifier}+l" = "exec ${lockCommand}";
         "${modifier}+grave" = "exec ${menu}";
         # TODO: Figure out how to make this conditional on host
         "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +2%";
@@ -174,11 +177,11 @@
     };
     extraConfig = ''
       exec swayidle -w \
-         timeout 300 ${pkgs.swaylock-effects}/bin/swaylock \
+         timeout 300 ${lockCommand} \
          timeout 310 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
          timeout 900 'if [ $(${pkgs.acpi}/bin/acpi -a | cut -d" " -f3 | cut -d- -f1) = "off" ]; then systemctl suspend-then-hibernate; fi' \
           timeout 30 'if pgrep swaylock; then swaymsg "output * dpms off"; fi' resume 'swaymsg "output * dpms on"'\
-         before-sleep '${pkgs.swaylock-effects}/bin/swaylock'
+         before-sleep '${lockCommand}'
      '';
   };
 
