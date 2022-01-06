@@ -33,6 +33,13 @@
 
   #fonts.fontconfig.enable = true;
 
+  services.gammastep = {
+    enable = true;
+    latitude = 53.6;
+    longitude = 113.3;
+    tray = true;
+  };
+
   programs.vim = {
     enable = true;
     settings = {
