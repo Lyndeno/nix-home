@@ -40,6 +40,17 @@
     tray = true;
   };
 
+  # TODO: This module will be in next hm release
+  #services.swayidle = {
+  #  enable = true;
+  #  events = [
+  #    { event = "before-sleep"; command = "${pkgs.swaylock-effects}/bin/swaylock"; }
+  #  ];
+  #  timeouts = [
+  #    { timeout = 30; command = "if pgrep swaylock; then swaymsg 'output * dpms off'"; }
+  #  ];
+  #};
+
   programs.vim = {
     enable = true;
     settings = {
@@ -161,6 +172,14 @@
       };
       bars = [];
     };
+    extraConfig = ''
+      exec swayidle -w \
+         timeout 300 ${pkgs.swaylock-effects}/bin/swaylock \
+         timeout 310 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+         timeout 900 'if [ $(${pkgs.acpi}/bin/acpi -a | cut -d" " -f3 | cut -d- -f1) = "off" ]; then systemctl suspend-then-hibernate; fi' \
+          timeout 30 'if pgrep swaylock; then swaymsg "output * dpms off"; fi' resume 'swaymsg "output * dpms on"'\
+         before-sleep '${pkgs.swaylock-effects}/bin/swaylock'
+     '';
   };
 
   programs.mako = {
