@@ -9,8 +9,10 @@ in
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  #home.username = "lsanche";
-  #home.homeDirectory = "/home/lsanche";
+  home.username = "lsanche";
+  home.homeDirectory = "/home/lsanche";
+
+  home.enableNixpkgsReleaseCheck = true;
 
   home.packages = with pkgs; [
     # Fonts
@@ -29,6 +31,12 @@ in
     #gnome.seahorse
     #gnome.nautilus
   ];
+
+  gtk = {
+    enable = true;
+    theme.name = "Adwaita-dark";
+    theme.package = pkgs.gnome.gnome_themes_standard;
+  };
 
   home.sessionVariables = {
     EDITOR = "vim";
