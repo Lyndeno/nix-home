@@ -52,6 +52,11 @@
 
   programs.waybar = {
     enable = true;
+    systemd = {
+      enable = true;
+      # TODO: Will be in the next release of home-manager
+      #target = "sway-session.target";
+    };
     # in next release will allow specifying the path to a css file
     style = lib.readFile ./style.css;
     settings = [{
@@ -91,7 +96,6 @@
 
   wayland.windowManager.sway = {
     enable = true;
-    systemdIntegration = false;
     wrapperFeatures.gtk = true;
     package = null;
     config = {
@@ -143,11 +147,7 @@
           scroll_factor = "0.2";
         };
       };
-      bars = [
-        {
-          command = "${pkgs.waybar}/bin/waybar";
-        }
-      ];
+      bars = [];
     };
   };
 
