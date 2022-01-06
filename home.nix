@@ -95,6 +95,12 @@
           format-full = " Full";
           format-icons = ["" "" "" "" "" "" "" "" "" ""];
         };
+
+        "clock" = {
+          tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          format = "{:%-I:%M %p}";
+          format-alt = "{:%Y-%m-%d}";
+        };
       };
     }];
   };
@@ -107,7 +113,6 @@
     package = null;
     config = {
       startup = [
-        #{ command = "pkill waybar; ${pkgs.waybar}/bin/waybar"; always = true;}
         { command = "dbus-update-activation-environment WAYLAND_DISPLAY"; }
       ];
       keybindings = let
