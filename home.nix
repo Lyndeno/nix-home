@@ -36,6 +36,8 @@ in
     enable = true;
     theme.name = "Adwaita-dark";
     theme.package = pkgs.gnome.gnome_themes_standard;
+    iconTheme.name = "Papirus-Dark";
+    iconTheme.package = pkgs.papirus-icon-theme;
   };
 
   home.sessionVariables = {
