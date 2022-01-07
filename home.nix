@@ -26,10 +26,18 @@ in
     spotify
     zathura
     #pavucontrol
-    #signal-desktop
+    signal-desktop
     #gnupg
     #gnome.seahorse
     #gnome.nautilus
+    fzf
+    neofetch
+    bottom
+    exa
+    bat
+    zathura
+    spotify
+    discord
   ];
 
   gtk = {
