@@ -40,6 +40,12 @@ in
     discord
   ];
 
+  xdg = {
+    enable = true;
+    userDirs.enable = true;
+    userDirs.createDirectories = false;
+  };
+
   gtk = {
     enable = true;
     theme.name = "Adwaita-dark";
