@@ -213,6 +213,7 @@ in
       startup = [
         { command = "dbus-update-activation-environment WAYLAND_DISPLAY"; }
       ];
+      output."*" = { bg = "~/.config/wallpaper fill"; };
       keybindings = let
         modifier = config.wayland.windowManager.sway.config.modifier;
         menu = config.wayland.windowManager.sway.config.menu;
