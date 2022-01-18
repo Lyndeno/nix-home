@@ -259,6 +259,7 @@ in
           command = "floating enable, move position 877 450";
         }
       ];
+      window.border = 3;
       terminal = "alacritty";
       modifier = "Mod4";
       input = {
@@ -268,6 +269,12 @@ in
           scroll_factor = "0.2";
         };
       };
+      gaps = {
+        inner = 20;
+        smartGaps = true;
+        smartBorders = "on";
+      };
+      workspaceAutoBackAndForth = true;
       bars = [];
     };
     extraConfig = ''
