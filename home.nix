@@ -222,6 +222,7 @@ in
     config = {
       startup = [
         { command = "dbus-update-activation-environment WAYLAND_DISPLAY"; }
+        { command = "${pkgs.discord}/bin/discord --start-minimized --disable-frame-rate-limit"; }
       ];
       output."*" = { bg = "~/.config/wallpaper fill"; };
       keybindings = let
