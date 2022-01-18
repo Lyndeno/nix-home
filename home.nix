@@ -222,9 +222,6 @@ in
       in lib.mkOptionDefault {
         "${modifier}+l" = "exec ${lockCommand}";
         "${modifier}+grave" = "exec ${menu}";
-        # TODO: Figure out how to make this conditional on host
-        "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +2%";
-        "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 2%-";
 
         #TODO: Implement --locked
         "XF86AudioRaiseVolume" = "exec ${setMute} off && ${setVolume} +2%";
