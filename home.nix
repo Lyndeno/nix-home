@@ -342,6 +342,9 @@ in
     userEmail = "lsanche@lyndeno.ca";
     signing.key = "6F8E82F60C799B18";
     signing.signByDefault = true;
+    extraConfig = {
+      pull.rebase = false;
+    };
   };
 
   #services.gpg-agent = {
