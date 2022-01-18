@@ -18,9 +18,8 @@ in
     # Fonts
     (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
     #neofetch
-    starship
+    #starship
     exa
-    bat
     jq
     #bottom
     spotify
