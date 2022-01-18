@@ -238,6 +238,8 @@ in
         "XF86AudioRaiseVolume" = "exec ${setMute} off && ${setVolume} +2%";
         "XF86AudioLowerVolume" = "exec ${setMute} off && ${setVolume} -2%";
         "XF86AudioMute" = "exec ${setMute} toggle";
+
+        "print" = "exec --no-startup-id ${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g - - | ${pkgs.wl-clipboard}/bin/wl-copy && ${pkgs.wl-clipboard}/bin/wl-paste > ~/Pictures/$(date +'screenshot_%Y-%m-%d-%H%M%S.png')";
       };
       menu = "${pkgs.wofi}/bin/wofi --show drun --allow-images --no-actions";
       window.titlebar = false;
