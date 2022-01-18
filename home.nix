@@ -92,6 +92,17 @@ in
     history = {
       path = "$HOME/.cache/zsh/histfile";
     };
+    shellAliases = {
+      cat = "${pkgs.bat}/bin/bat";
+      ls = "${pkgs.exa}/bin/exa --icons --group-directories-first -B";
+    };
+    initExtra = ''
+      ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
+      ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
+      typeset -A ZSH_HIGHLIGHT_PATTERNS
+      ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
+      bindkey '^ ' autosuggest-accept
+    '';
   };
 
   programs.waybar = {
