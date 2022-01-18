@@ -102,13 +102,13 @@ in
       position = "bottom";
       height = 10;
       modules-left = ["sway/workspaces" "sway/window"];
-      modules-right = ["disk#nix" "cpu" "memory" "network" "battery" "backlight" "clock" "pulseaudio" "idle_inhibitor" "tray" ];
+      modules-right = ["disk#root" "cpu" "memory" "network" "battery" "backlight" "clock" "pulseaudio" "idle_inhibitor" "tray" ];
       gtk-layer-shell = true;
       modules = {
-        "disk#nix" = {
+        "disk#root" = {
           interval = 30;
           format = " {percentage_free}%";
-          path = "/nix";
+          path = "/";
           states = {
             "warning" = 80;
             "high" =  90;
