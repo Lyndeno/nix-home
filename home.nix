@@ -243,6 +243,10 @@ in
         "XF86AudioMute" = "exec ${setMute} toggle";
 
         "print" = "exec --no-startup-id ${pkgs.slurp}/bin/slurp | ${pkgs.grim}/bin/grim -g - - | ${pkgs.wl-clipboard}/bin/wl-copy && ${pkgs.wl-clipboard}/bin/wl-paste > ~/Pictures/$(date +'screenshot_%Y-%m-%d-%H%M%S.png')";
+
+        "${modifier}+equal" = "gaps inner all plus 10";
+        "${modifier}+minus" = "gaps inner all minus 10";
+        "${modifier}+Shift+minus" = "gaps inner all set ${toString config.wayland.windowManager.sway.config.gaps.inner}";
       };
       menu = "${pkgs.wofi}/bin/wofi --show drun --allow-images --no-actions";
       window.titlebar = false;
