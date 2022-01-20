@@ -37,6 +37,7 @@ in
     zathura
     spotify
     discord
+    libreoffice-fresh
   ];
 
   xdg = {
