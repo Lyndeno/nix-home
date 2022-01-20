@@ -97,11 +97,14 @@ in
       ls = "${pkgs.exa}/bin/exa --icons --group-directories-first -B";
     };
     initExtra = ''
+      source ${pkgs.zsh-history-substring-search}/share/zsh-history-substring-search/zsh-history-substring-search.zsh
       ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
       ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
       typeset -A ZSH_HIGHLIGHT_PATTERNS
       ZSH_HIGHLIGHT_PATTERNS+=('rm -rf *' 'fg=white,bold,bg=red')
       bindkey '^ ' autosuggest-accept
+      bindkey "$terminfo[kcuu1]" history-substring-search-up
+      bindkey "$terminfo[kcud1]" history-substring-search-down
     '';
   };
 
