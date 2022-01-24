@@ -44,6 +44,12 @@ in
     enable = true;
     userDirs.enable = true;
     userDirs.createDirectories = false;
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+      };
+    };
   };
 
   gtk = {
@@ -84,6 +90,8 @@ in
       tabstop = 2;
     };
   };
+
+  programs.nnn.enable = true;
 
   programs.zsh = {
     enable = true;
@@ -248,6 +256,7 @@ in
         "${modifier}+equal" = "gaps inner all plus 10";
         "${modifier}+minus" = "gaps inner all minus 10";
         "${modifier}+Shift+minus" = "gaps inner all set ${toString config.wayland.windowManager.sway.config.gaps.inner}";
+        "${modifier}+z" = "exec ${config.programs.alacritty.package}/bin/alacritty -e ${config.programs.nnn.package}/bin/nnn";
       };
       menu = "${pkgs.wofi}/bin/wofi --show drun --allow-images --no-actions";
       window.titlebar = false;
