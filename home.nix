@@ -20,23 +20,16 @@ in
     # Fonts
     (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
     #neofetch
-    #starship
     exa
     jq
-    #bottom
     spotify
     zathura
-    #pavucontrol
     signal-desktop
-    #gnupg
-    #gnome.seahorse
-    #gnome.nautilus
     fzf
     neofetch
     bottom
     exa
     bat
-    zathura
     spotify
     discord
     libreoffice-fresh
