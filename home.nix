@@ -101,6 +101,20 @@ in
       ls = "${pkgs.exa}/bin/exa --icons --group-directories-first -B";
     };
     initExtra = ''
+      zmodload zsh/complist
+      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+      zstyle ':completion:*' menu select
+
+      # Vim bindings for tab menu
+      bindkey -M menuselect 'h' vi-backward-char
+      bindkey -M menuselect 'k' vi-up-line-or-history
+      bindkey -M menuselect 'l' vi-forward-char
+      bindkey -M menuselect 'j' vi-down-line-or-history
+
+      # TODO: Convert this to nix expressions
+      alias d='dirs -v'
+      for i ({1..9}) alias "$i"="cd +''${i}"; unset i
+
       source ${pkgs.zsh-history-substring-search}/share/zsh-history-substring-search/zsh-history-substring-search.zsh
       ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
       ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
