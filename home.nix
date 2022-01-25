@@ -1,7 +1,9 @@
 { config, pkgs, lib, ... }:
 
 let
-  lockCommand = "${pkgs.swaylock-effects}/bin/swaylock";
+  commands = {
+    lock = "${pkgs.swaylock-effects}/bin/swaylock";
+  };
 in
 {
   # Let Home Manager install and manage itself.
@@ -243,7 +245,7 @@ in
         setMute = "${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@";
         setVolume = "${pkgs.pulseaudio}/bin/pactl -- set-sink-volume @DEFAULT_SINK@";
       in lib.mkOptionDefault {
-        "${modifier}+l" = "exec ${lockCommand}";
+        "${modifier}+l" = "exec ${commands.lock}";
         "${modifier}+grave" = "exec ${menu}";
 
         #TODO: Implement --locked
@@ -296,11 +298,11 @@ in
     };
     extraConfig = ''
       exec swayidle -w \
-         timeout 300 ${lockCommand} \
+         timeout 300 ${commands.lock} \
          timeout 310 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
          timeout 900 'if [ $(${pkgs.acpi}/bin/acpi -a | cut -d" " -f3 | cut -d- -f1) = "off" ]; then systemctl suspend-then-hibernate; fi' \
           timeout 30 'if pgrep swaylock; then swaymsg "output * dpms off"; fi' resume 'swaymsg "output * dpms on"'\
-         before-sleep '${lockCommand}'
+         before-sleep '${commands.lock}'
      '';
   };
 
