@@ -111,6 +111,9 @@ in
       bindkey -M menuselect 'l' vi-forward-char
       bindkey -M menuselect 'j' vi-down-line-or-history
 
+      setopt AUTO_PUSHD
+      setopt PUSHD_IGNORE_DUPS
+      setopt PUSHD_SILENT
       # TODO: Convert this to nix expressions
       alias d='dirs -v'
       for i ({1..9}) alias "$i"="cd +''${i}"; unset i
