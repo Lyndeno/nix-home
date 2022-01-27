@@ -454,6 +454,10 @@ in
 
   programs.starship = {
     enable = true;
+    settings = {
+      cmd_duration.show_notifications = true;
+      #cmd_duration.notification_timeout = 3000;
+    };
   };
 
   # This value determines the Home Manager release that your
