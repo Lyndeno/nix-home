@@ -25,7 +25,6 @@ in
     spotify
     zathura
     signal-desktop
-    fzf
     neofetch
     bottom
     exa
@@ -34,6 +33,8 @@ in
     discord
     libreoffice-fresh
   ];
+
+  programs.fzf.enable = true;
 
   xdg = {
     enable = true;
