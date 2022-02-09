@@ -190,6 +190,7 @@ in
   programs.starship = {
     enable = true;
     settings = {
+      add_newline = false;
 
       format = lib.concatStrings [
         "$username$hostname$directory\n"
